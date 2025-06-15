@@ -92,3 +92,15 @@ button:focus-visible {
   transform: translateX(-50%);
 }
 
+h3{
+  font-size: 1.17rem;
+  margin-block-start: 1rem;
+  margin-block-end: 1rem;
+}
+p{
+  margin-block-start: 1rem;
+  margin-block-end: 1rem;
+}
+h1{
+  margin:1rem 0;
+}

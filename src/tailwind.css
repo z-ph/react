@@ -1,5 +1,5 @@
 /* 只导入Tailwind的组件和工具类，不导入base样式 */
 /* @tailwind utilities; */
 @import 'tailwindcss';
-/* @import 'tailwindcss/utilities'; */
+@import 'tailwindcss/utilities';
 
