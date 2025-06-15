@@ -147,7 +147,7 @@ function HomePage({changePage}: {changePage: (page: string) => void}){
               本系统提供公务员、事业单位、教师资格证等考试培训的在线报名服务。
               请点击下方按钮开始报名流程。
             </p>
-            <Button type="primary" onClick={() => changePage("about")} style={btnStyle}>
+            <Button type="primary" onClick={() => changePage("About")} style={btnStyle}>
               {btnContentList[0]}
             </Button>
             <Button type="primary" ghost style={btnStyle}>

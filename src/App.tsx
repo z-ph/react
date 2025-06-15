@@ -1,16 +1,34 @@
-import HomePage from "./HomePage";
-import AboutPage from "./AboutPage";
-import { useState } from "react";
-function App(){
-  const [pageState, setPageState] = useState<string>('home');
-  const changePage = (page: string) => {
-    setPageState(page);
-  };
-  const allPages ={
-    home: <HomePage changePage={changePage}/>,
-    about: <AboutPage changePage={changePage}/>,
-  }
+import { lazy, Suspense, useState,  } from "react";
+import type {ComponentType} from "react";
 
-  return allPages[pageState as keyof typeof allPages];
+
+
+type PageComponentProps = {
+  changePage: (page: "Home" | "About") => void;
+};
+
+const HomePage = lazy(
+  () => import("./HomePage")
+) as ComponentType<PageComponentProps>;
+const AboutPage = lazy(
+  () => import("./AboutPage")
+) as ComponentType<PageComponentProps>;
+
+function App() {
+  const [page, setPage] = useState<"Home" | "About">("Home");
+
+  const pages = {
+    Home: HomePage,
+    About: AboutPage,
+  };
+
+  const CurrentPage = pages[page];
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CurrentPage changePage={setPage} />
+    </Suspense>
+  );
 }
+
 export default App;
