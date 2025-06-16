@@ -7,13 +7,13 @@ type PageComponentProps = {
 };
 import HomePage from "./pages/HomePage";
 import EnrollPage from "./pages/EnrollPage";
-
-// const ManagerPage = lazy(
-//   () => import("./pages/ManagerPage")
-// ) as ComponentType<PageComponentProps>;
-// const OrderPage = lazy(
-//   () => import("./pages/OrderPage")
-// ) as ComponentType<PageComponentProps>;
+//懒加载
+const ManagerPage = lazy(
+  () => import("./pages/ManagerPage")
+) as ComponentType<PageComponentProps>;
+const OrderPage = lazy(
+  () => import("./pages/OrderPage")
+) as ComponentType<PageComponentProps>;
 function lazyImport(pageName:Page):ComponentType<PageComponentProps>{
   return lazy(
     () =>
@@ -38,8 +38,8 @@ function App() {
   const [pages] = useState<Record<Page,ComponentType<PageComponentProps>>>({
     Home: HomePage,
     Enroll: EnrollPage,
-    // Manager: ManagerPage,
-    // Order: OrderPage,
+    Manager: ManagerPage,
+    Order: OrderPage,
   } as Record<Page,ComponentType<PageComponentProps>>);
   if(!Object.keys(pages).includes(page)){
     pages[page]=lazyImport(page);
