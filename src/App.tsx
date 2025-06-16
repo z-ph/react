@@ -1,27 +1,27 @@
 import { lazy, Suspense, useState,  } from "react";
 import type {ComponentType} from "react";
-
-type Page = "Home" | "About" | "Enroll" | "Manager";
+type Page = "Home"  | "Enroll" | "Manager"| "Order";
 
 type PageComponentProps = {
   changePage: (page: Page) => void;
 };
 import HomePage from "./pages/HomePage";
 import EnrollPage from "./pages/EnrollPage";
-// const HomePage = lazy(
-//   () => import("./pages/HomePage")
-// ) as ComponentType<PageComponentProps>;
-// const EnrollPage = lazy(
-//   () => import("./pages/EnrollPage")
-// ) as ComponentType<PageComponentProps>;
-// const AboutPage = lazy(
-//   () => import("./pages/AboutPage")
-// ) as ComponentType<PageComponentProps>;
+
 // const ManagerPage = lazy(
 //   () => import("./pages/ManagerPage")
 // ) as ComponentType<PageComponentProps>;
+// const OrderPage = lazy(
+//   () => import("./pages/OrderPage")
+// ) as ComponentType<PageComponentProps>;
 function lazyImport(pageName:Page):ComponentType<PageComponentProps>{
-  return lazy(() => import(/* @vite-ignore */`./pages/${pageName}Page`))
+  return lazy(
+    () =>
+      import(
+        /* @vite-ignore */
+        `./pages/${pageName}Page`
+      )
+  );
 }
 function App() {
   const [page, setPage] = useState<Page>("Home"); 
@@ -38,6 +38,8 @@ function App() {
   const [pages] = useState<Record<Page,ComponentType<PageComponentProps>>>({
     Home: HomePage,
     Enroll: EnrollPage,
+    // Manager: ManagerPage,
+    // Order: OrderPage,
   } as Record<Page,ComponentType<PageComponentProps>>);
   if(!Object.keys(pages).includes(page)){
     pages[page]=lazyImport(page);

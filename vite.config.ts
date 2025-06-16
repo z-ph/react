@@ -7,5 +7,16 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base:'/react/'
+  base: '/react/',
+  build: {
+    rollupOptions: {
+      input: {
+        // 显式声明所有可能的页面入口
+        // home: 'src/pages/HomePage.tsx',
+        // enroll: 'src/pages/EnrollPage.tsx',
+        manager: 'src/pages/ManagerPage.tsx',
+        order: 'src/pages/OrderPage.tsx'
+      }
+    }
+  }
 })
