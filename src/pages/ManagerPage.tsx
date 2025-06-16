@@ -8,7 +8,7 @@ export default function ManagerPage({changePage}: {changePage: (page: string) =>
     };
     return (
       <Main back={() => changePage("Home")} title="管理员登录">
-        <header className="text-center flex-col justify-center items-center my-[32px]">
+        <header className="gap-[1.5rem] flex flex-col justify-center items-center my-[32px]">
           <UserOutlined style={{ fontSize: "48px", color: "#1989FA" }} />
           <h2 className="text-[20px] font-bold">公职类考试培训报名系统</h2>
           <p className="text-[16px] font-normal text-gray-500">管理后台</p>
