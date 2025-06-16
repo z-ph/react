@@ -21,7 +21,7 @@ import EnrollPage from "./pages/EnrollPage";
 //   () => import("./pages/ManagerPage")
 // ) as ComponentType<PageComponentProps>;
 function lazyImport(pageName:Page):ComponentType<PageComponentProps>{
-  return lazy(() => import(`./pages/${pageName}Page`))
+  return lazy(() => import(/* @vite-ignore */`./pages/${pageName}Page`))
 }
 function App() {
   const [page, setPage] = useState<Page>("Home"); 

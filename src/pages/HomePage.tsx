@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, Layout, Button } from "antd";
-import "../assets/css/content-section1.css";
 const { Header, Footer, Content } = Layout;
 import {
   CustomerServiceOutlined,
@@ -56,7 +55,7 @@ function ContentSection1({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div style={sectionStyle} className="content-section1">
+    <div style={sectionStyle} >
       {children}
     </div>
   );

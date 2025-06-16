@@ -1,0 +1,39 @@
+# .github/workflows/deploy.yaml
+name: Deploy to dist branch
+
+on:
+  push:
+    branches: [ "main" ]  # 触发分支，根据你的实际情况修改
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整历史记录
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # 使用你的项目Node版本
+          
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8  # 使用pnpm版本8，可以根据你的项目需求调整
+
+      - name: Install dependencies
+        run: pnpm install  # 如果你用npm，改为 npm ci
+
+      - name: Build project
+        run: pnpm build  # 根据你的package.json中的build脚本
+
+      - name: Deploy to dist branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: .  # 直接发布到dist分支根目录
+          publish_branch: dist  # 目标分支名称

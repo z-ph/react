@@ -1,4 +1,8 @@
 /* 只导入Tailwind的组件和工具类，不导入base样式 */
 /* @tailwind utilities; */
-@import 'tailwindcss';
 
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* @import "tailwindcss/components.css" layer(components); */
