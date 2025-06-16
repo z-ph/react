@@ -16,6 +16,7 @@ export default defineConfig({
         // enroll: 'src/pages/EnrollPage.tsx',
         manager: 'src/pages/ManagerPage.tsx',
         order: 'src/pages/OrderPage.tsx'
+        
       }
     }
   }
