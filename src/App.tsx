@@ -1,31 +1,52 @@
 import { lazy, Suspense, useState,  } from "react";
 import type {ComponentType} from "react";
 
-
+type Page = "Home" | "About" | "Enroll" | "Manager";
 
 type PageComponentProps = {
-  changePage: (page: "Home" | "About") => void;
+  changePage: (page: Page) => void;
 };
-
-const HomePage = lazy(
-  () => import("./HomePage")
-) as ComponentType<PageComponentProps>;
-const AboutPage = lazy(
-  () => import("./AboutPage")
-) as ComponentType<PageComponentProps>;
-
+import HomePage from "./pages/HomePage";
+import EnrollPage from "./pages/EnrollPage";
+// const HomePage = lazy(
+//   () => import("./pages/HomePage")
+// ) as ComponentType<PageComponentProps>;
+// const EnrollPage = lazy(
+//   () => import("./pages/EnrollPage")
+// ) as ComponentType<PageComponentProps>;
+// const AboutPage = lazy(
+//   () => import("./pages/AboutPage")
+// ) as ComponentType<PageComponentProps>;
+// const ManagerPage = lazy(
+//   () => import("./pages/ManagerPage")
+// ) as ComponentType<PageComponentProps>;
+function lazyImport(pageName:Page):ComponentType<PageComponentProps>{
+  return lazy(() => import(`./pages/${pageName}Page`))
+}
 function App() {
-  const [page, setPage] = useState<"Home" | "About">("Home");
+  const [page, setPage] = useState<Page>("Home"); 
 
-  const pages = {
+  // const pages = {
+  //   Home: HomePage,
+  //   About: AboutPage,
+  //   Enroll: EnrollPage,
+  //   Manager: ManagerPage,
+  // };
+  // const CurrentPage = pages[page];
+  
+  //实现按需加载
+  const [pages] = useState<Record<Page,ComponentType<PageComponentProps>>>({
     Home: HomePage,
-    About: AboutPage,
-  };
+    Enroll: EnrollPage,
+  } as Record<Page,ComponentType<PageComponentProps>>);
+  if(!Object.keys(pages).includes(page)){
+    pages[page]=lazyImport(page);
+  }
 
   const CurrentPage = pages[page];
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div style={{color:"#000",textAlign:"center",fontSize:"20px"}}>Loading...</div>}>
       <CurrentPage changePage={setPage} />
     </Suspense>
   );

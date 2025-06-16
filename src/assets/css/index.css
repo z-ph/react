@@ -4,7 +4,7 @@
   font-weight: 400;
   font-size: 16px;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(0, 0, 0, 0.87);
   background-color: #F7F8FA;
 
   font-synthesis: none;
@@ -90,6 +90,7 @@ button:focus-visible {
   min-height: 100vh;
   height: fit-content;
   transform: translateX(-50%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
 h3{

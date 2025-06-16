@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Layout, Button } from "antd";
-import "./content-section1.css";
+import "../assets/css/content-section1.css";
 const { Header, Footer, Content } = Layout;
 import {
   CustomerServiceOutlined,
@@ -45,6 +45,11 @@ function HeaderCard({ title, subTitle }: HeaderCardProps) {
   );
 }
 
+/**
+ * 内容区域1组件
+ * @param children - 子节点内容
+ * @returns 带有底部间距的内容区域容器
+ */
 function ContentSection1({ children }: { children: ReactNode }) {
   const sectionStyle: React.CSSProperties = {
     marginBottom: "12px",
@@ -53,7 +58,6 @@ function ContentSection1({ children }: { children: ReactNode }) {
   return (
     <div style={sectionStyle} className="content-section1">
       {children}
-
     </div>
   );
 }
@@ -103,7 +107,6 @@ function HomePage({changePage}: {changePage: (page: string) => void}){
   const layoutStyle: React.CSSProperties = {
     position: "absolute",
     borderRadius: 0,
-    overflow: "hidden",
     width: "100%",
     height: "fit-content",
   };
@@ -130,7 +133,37 @@ function HomePage({changePage}: {changePage: (page: string) => void}){
     width: "100%",
     height: "44px",
   };
-  const btnContentList = ["开始报名", "查询订单状态", "管理员入口"];
+  interface BtnContent {
+    text: string;
+    type: "primary" | "default" | "dashed" | "link" | "text";
+    ghost: boolean;
+    changePage: (() => void);
+  }
+  const btnContentList: BtnContent[] = [
+    {
+      text: "开始报名",
+      type: "primary",
+      ghost: false,
+      changePage: () => changePage("Enroll"),
+    },
+    {
+      text: "查看报名进度",
+      type: "primary",
+      ghost: true,
+      changePage: () => changePage("Order"),
+    },
+    {
+      text: "管理员入口",
+      type: "default",
+      ghost: false,
+      changePage: () => changePage("Manager"),
+    },
+  ];
+  const btnList = btnContentList.map((item, index) => (
+    <Button key={index} style={btnStyle} type={item.type} ghost={item.ghost} onClick={()=>item.changePage()}>
+      {item.text}
+    </Button>
+  ));
   return (
     <>
       <Layout style={layoutStyle}>
@@ -147,13 +180,7 @@ function HomePage({changePage}: {changePage: (page: string) => void}){
               本系统提供公务员、事业单位、教师资格证等考试培训的在线报名服务。
               请点击下方按钮开始报名流程。
             </p>
-            <Button type="primary" onClick={() => changePage("About")} style={btnStyle}>
-              {btnContentList[0]}
-            </Button>
-            <Button type="primary" ghost style={btnStyle}>
-              {btnContentList[1]}
-            </Button>
-            <Button style={btnStyle}>{btnContentList[2]}</Button>
+            {btnList}
           </ContentSection1>
           <ContentSection2 sectionTitle="我们的优势">
             <Card style={cardStyle} styles={{ body: cardBody }}>
