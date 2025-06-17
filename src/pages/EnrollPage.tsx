@@ -55,15 +55,18 @@ export default function EnrollPage({ changePage }: { changePage: (page: string)=
   return (
     <Main title={"填写信息"} back={() => changePage("Home")}>
       <Steps
-        style={{ margin: "16px 0" }}
+        type="inline"
+        style={{ margin: "16px 0",width:"100%"}}
+        progressDot
+        direction="horizontal"
         labelPlacement="vertical"
         size="small"
         current={0}
       >
-        <Steps.Step title="填写信息" />
-        <Steps.Step title="选择班型" />
-        <Steps.Step title="支付定金" />
-        <Steps.Step title="签署合同" />
+        <Steps.Step style={{flex:"1 0 0"}} title={<span className="text-[12px]">填写信息</span>} />
+        <Steps.Step style={{flex:"1 0 0"}} title={<span className="text-[12px]">选择班型</span>} />
+        <Steps.Step style={{flex:"1 0 0"}} title={<span className="text-[12px]">支付定金</span>} />
+        <Steps.Step style={{flex:"1 0 0"}} title={<span className="text-[12px]">签署合同</span>} />
       </Steps>
       <Form
         onFinish={onFinish}
@@ -100,7 +103,7 @@ export default function EnrollPage({ changePage }: { changePage: (page: string)=
           name="IDcard"
           rules={[{ required: true }]}
         >
-          <Input variant="borderless"   placeholder="请输入身份证号" />
+          <Input variant="borderless" placeholder="请输入身份证号" />
         </Form.Item>
         <Form.Item
           style={underlineStyle}

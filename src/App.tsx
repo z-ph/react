@@ -12,9 +12,7 @@ const pageComponents = import.meta.glob("./pages/*Page.tsx");
 
 function lazyImport(pageName: Page): ComponentType<PageComponentProps> {
   const componentPath = `./pages/${pageName}Page.tsx`;
-  return lazy(
-    pageComponents[componentPath] as () => Promise<{ default: ComponentType }>
-  );
+  return lazy(pageComponents[componentPath] as () => Promise<{ default: ComponentType }>);
 }
 function App() {
   const [page, setPage] = useState<Page>("Home");

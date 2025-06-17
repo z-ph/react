@@ -1,20 +1,10 @@
 import Main from "../components/Main";
 import type React from 'react';
-import type { StepsProps } from "antd";
-import { Popover, Steps,Button } from "antd";
+
+import { Steps,Button } from "antd";
 import {MoneyCollectOutlined} from '@ant-design/icons';
 
-const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
-  <Popover
-    content={
-      <span>
-        step {index} status: {status}
-      </span>
-    }
-  >
-    {dot}
-  </Popover>
-);
+
 export default function OrderPage({changePage}: {changePage: (page: string) => void}){
     const underlineStyle :React.CSSProperties={
         borderBottom: "1px solid var(--border-color)",
@@ -103,7 +93,7 @@ export default function OrderPage({changePage}: {changePage: (page: string) => v
         <section style={section1}>
           <h2 className="font-bold mb-[1rem]">订单状态</h2>
           <Steps
-            progressDot={customDot}
+            progressDot
             style={{ height: "152px", padding: "8px 16px" }}
             direction="vertical"
             size="small"
