@@ -83,8 +83,12 @@ export const preloadComponent = (path: string): ModuleImport<ComponentType<void>
     }
   }
 
-  // 缓存预加载的 Promise
-  preloadMap.set(path, componentPromise);
+  // 缓存预加载的 Promise，并添加错误处理
+  preloadMap.set(path, componentPromise.catch(err => {
+    // 预加载失败时移除缓存，以便后续访问时重新加载
+    preloadMap.delete(path);
+    throw err;
+  }));
   return componentPromise;
 };
 
