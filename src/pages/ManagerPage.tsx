@@ -2,6 +2,7 @@ import Main from "../components/Main";
 import { Form,Input,Button} from "antd";
 import {UserOutlined}from "@ant-design/icons";
 import type React from "react";
+import { adminUsernameRules, adminPasswordRules } from "../utils/validationRules";
 export default function ManagerPage(){
     const underlineStyle: React.CSSProperties = {
       borderBottom: "0.5px solid #ebedf0",
@@ -27,7 +28,7 @@ export default function ManagerPage(){
             style={underlineStyle}
             label="账号"
             name="username"
-            rules={[{ required: true }]}
+            rules={adminUsernameRules}
           >
             <Input variant="borderless" placeholder="请输入账号" />
           </Form.Item>
@@ -35,9 +36,9 @@ export default function ManagerPage(){
             style={underlineStyle}
             label="密码"
             name="password"
-            rules={[{ required: true }]}
+            rules={adminPasswordRules}
           >
-            <Input variant="borderless" placeholder="请输入密码" />
+            <Input.Password variant="borderless" placeholder="请输入密码" />
           </Form.Item>
           <Button
             style={{ width: "100%", height: "44px", borderRadius: "22px" }}

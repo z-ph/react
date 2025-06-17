@@ -4,6 +4,14 @@ import { useState, useEffect } from "react";
 import type { RadioChangeEvent } from "antd";
 import { useNavigate } from "react-router-dom";
 import Main from "../components/Main";
+import { 
+  usernameRules, 
+  phoneRules, 
+  idCardRules, 
+  educationRules, 
+  enrollTypeRules,
+  remarkRules 
+} from "../utils/validationRules";
 
 export default function EnrollPage() {
   const navigate = useNavigate();
@@ -96,7 +104,7 @@ export default function EnrollPage() {
           style={underlineStyle}
           label="姓名"
           name="username"
-          rules={[{ required: true }]}
+          rules={usernameRules}
         >
           <Input variant="borderless" placeholder="请输入姓名" />
         </Form.Item>
@@ -105,7 +113,7 @@ export default function EnrollPage() {
           style={underlineStyle}
           label="手机号"
           name="phone"
-          rules={[{ required: true }]}
+          rules={phoneRules}
         >
           <Input variant="borderless" placeholder="请输入手机号" />
         </Form.Item>
@@ -114,7 +122,7 @@ export default function EnrollPage() {
           style={underlineStyle}
           label="身份证号"
           name="IDcard"
-          rules={[{ required: true }]}
+          rules={idCardRules}
         >
           <Input variant="borderless" placeholder="请输入身份证号" />
         </Form.Item>
@@ -122,7 +130,7 @@ export default function EnrollPage() {
           style={underlineStyle}
           label="学历"
           name="education"
-          rules={[{ required: true }]}
+          rules={educationRules}
         >
           <Select options={SelectOptions} variant="borderless"></Select>
         </Form.Item>
@@ -130,7 +138,7 @@ export default function EnrollPage() {
           style={underlineStyle}
           label="报考类型"
           name="enrollType"
-          rules={[{ required: true }]}
+          rules={enrollTypeRules}
         >
           <Radio.Group
             onChange={onChange}
@@ -138,7 +146,7 @@ export default function EnrollPage() {
             options={RadioOptions}
           ></Radio.Group>
         </Form.Item>
-        <Form.Item label="备注" name="remark">
+        <Form.Item label="备注" name="remark" rules={remarkRules}>
           <Input variant="borderless" placeholder="请输入备注(选填)" />
         </Form.Item>
         <div className="flex gap-4">
