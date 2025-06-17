@@ -1,8 +1,18 @@
 import { lazy } from 'react'
-import type { RouteObject } from 'react-router-dom'
-import type { ComponentType } from 'react'
-const pages = ["","Home", "Enroll", "Manager", "Order", "ClassSelect","Error", '*'] as const;
-type Page = typeof pages[number];
+import type { RouteObject } from "react-router-dom";
+import type { ComponentType } from "react";
+const routes: RouteObject[] = [];
+
+const map= {
+  "": "Home",
+  "*": "Error",
+  Enroll: "Enroll",
+  Manager: "Manager",
+  Order: "Order",
+  ClassSelect: "ClassSelect",
+};
+type Page = keyof typeof map;
+const pages = Object.keys(map) as Page[];
 const pageComponents = import.meta.glob("./pages/*Page.tsx");
 function lazyImport(pageName: Page): ComponentType {
   const componentPath = `./pages/${pageName}Page.tsx`;
@@ -10,19 +20,18 @@ function lazyImport(pageName: Page): ComponentType {
     pageComponents[componentPath] as () => Promise<{ default: ComponentType }>
   );
 }
-function routesAdd(pageName: Page,Page: ComponentType) {
-  if(pageName === '*'){
-    Page = lazyImport('Error')
-  }
-  if(pageName === ''){
-    Page = lazyImport('Home')
+function pageNameToComponentType(pageName: Page): ComponentType {
+  return lazyImport(pageName);
+}
+function routesAdd(pageName: Page, Page: ComponentType) {
+  if (Object.keys(map).includes(pageName)) {
+    Page = pageNameToComponentType(map[pageName] as Page);
   }
   routes.push({
     path: `/${pageName}`,
     element: <Page />,
   });
 }
-const routes: RouteObject[] = [];
 pages.forEach(page => {
   const Page = lazyImport(page);
   routesAdd(page, Page);
