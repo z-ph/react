@@ -127,7 +127,7 @@ export default function OrderPage(){
             style={btnStyle}
             onClick={() => {
               // TODO: 这里应该跳转到支付页面，暂时返回首页
-              navigate("/");
+              navigate("/404");
             }}
           >
             去支付
