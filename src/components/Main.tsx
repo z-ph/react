@@ -1,6 +1,10 @@
 import React from "react";
 import Nav from "./Nav";
-export default function Main({children,title,back}:{children?:React.ReactNode|string,title:string,back:()=>void}) {
+interface MainProps {
+  children?: React.ReactNode | string;
+  title: string;
+}
+export default function Main({children,title}: MainProps) {
   const mainStyle: React.CSSProperties = {
     width: "100%",
     maxWidth: "750px",
@@ -12,7 +16,7 @@ export default function Main({children,title,back}:{children?:React.ReactNode|st
 
   return (
     <main style={mainStyle}>
-      <Nav title={title} changePage={back}  />
+      <Nav title={title}  />
       {children}
     </main>
   );

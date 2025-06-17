@@ -2,12 +2,12 @@ import Main from "../components/Main";
 import { Form,Input,Button} from "antd";
 import {UserOutlined}from "@ant-design/icons";
 import type React from "react";
-export default function ManagerPage({changePage}: {changePage: (page: string) => void}){
+export default function ManagerPage(){
     const underlineStyle: React.CSSProperties = {
       borderBottom: "0.5px solid #ebedf0",
     };
     return (
-      <Main back={() => changePage("Home")} title="管理员登录">
+      <Main   title="管理员登录">
         <header className="gap-[1.5rem] flex flex-col justify-center items-center my-[32px]">
           <UserOutlined style={{ fontSize: "48px", color: "#1989FA" }} />
           <h2 className="text-[20px] font-bold">公职类考试培训报名系统</h2>

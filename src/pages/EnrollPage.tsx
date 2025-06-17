@@ -1,10 +1,14 @@
-import { Steps, Button, Form, Input, Radio,Select } from "antd";
+import { Steps, Button, Form, Input, Radio, Select, message } from "antd";
 // import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import type { RadioChangeEvent } from "antd";
+import { useNavigate } from "react-router-dom";
 import Main from "../components/Main";
-export default function EnrollPage({ changePage }: { changePage: (page: string)=> void }) {
+
+export default function EnrollPage() {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
+  const [messageApi, contextHolder] = message.useMessage();
 
   // 学历列表
   const educationList = ["大专", "本科", "研究生", "博士"];
@@ -42,18 +46,27 @@ export default function EnrollPage({ changePage }: { changePage: (page: string)=
       "userInfoDraft",
       JSON.stringify(form.getFieldsValue())
     );
+    messageApi.success("保存成功");
   };
   const onFinish = (value: unknown) => {
     console.log(value);
     localStorage.removeItem("userInfoDraft");
     localStorage.setItem("userInfo", JSON.stringify(value));
+    // 导航到选择班型页面
+    messageApi.success('提交成功')
+    messageApi.open({
+      type:"loading",
+      content:"正在跳转...",
+      duration:2.5
+    }).then(()=>messageApi.success('bro,你的网络有点差'))
+    navigate("/ClassSelect");
   };
   const underlineStyle: React.CSSProperties = {
     borderBottom: "0.5px solid #ebedf0",
   };
-
   return (
-    <Main title={"填写信息"} back={() => changePage("Home")}>
+    <Main title={"填写信息"}>
+      {contextHolder}
       <Steps
         type="inline"
         style={{ margin: "16px 0",width:"100%"}}

@@ -1,15 +1,22 @@
 import React from "react";
-import {LeftOutlined } from "@ant-design/icons";
-function Nav({ title, changePage }: { title: string, changePage: (page: string) => void }) {
-    const style: React.CSSProperties = {
-      borderBottom: "0.5px solid #ebedf0",
-      alignItems:'center',
-      userSelect: "none",
-    }; 
+import { LeftOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+interface NavProps {
+  title: string;
+  }
+function Nav({ title }: NavProps) {
+  const navigate = useNavigate();
+  
+  const style: React.CSSProperties = {
+    borderBottom: "0.5px solid #ebedf0",
+    alignItems: 'center',
+    userSelect: "none",
+  }; 
+
   return (
     <nav style={style} className="relative flex text-[#000] w-[100%] h-[46px] ">
       <div
-        onClick={() => changePage("Home")}
+        onClick={() => navigate(-1)}
         style={{
           cursor: "pointer",
         }}
@@ -22,4 +29,5 @@ function Nav({ title, changePage }: { title: string, changePage: (page: string) 
     </nav>
   );
 }
+
 export default Nav;

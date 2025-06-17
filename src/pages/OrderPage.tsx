@@ -1,11 +1,12 @@
 import Main from "../components/Main";
 import type React from 'react';
+import { useNavigate } from "react-router-dom";
+import { Steps, Button } from "antd";
+import { MoneyCollectOutlined } from '@ant-design/icons';
 
-import { Steps,Button } from "antd";
-import {MoneyCollectOutlined} from '@ant-design/icons';
 
-
-export default function OrderPage({changePage}: {changePage: (page: string) => void}){
+export default function OrderPage(){
+    const navigate = useNavigate();
     const underlineStyle :React.CSSProperties={
         borderBottom: "1px solid var(--border-color)",
         paddingBottom:'12px'
@@ -89,7 +90,7 @@ export default function OrderPage({changePage}: {changePage: (page: string) => v
         ...section2
         }
     return (
-      <Main back={() => changePage("Home")} title="订单">
+      <Main title="订单">
         <section style={section1}>
           <h2 className="font-bold mb-[1rem]">订单状态</h2>
           <Steps
@@ -111,11 +112,24 @@ export default function OrderPage({changePage}: {changePage: (page: string) => v
           {infoComponentList}
         </section>
         <section style={section3}>
-          <Button style={btnStyle}>
+          <Button 
+            style={btnStyle} 
+            onClick={() => {
+              // 取消订单后返回首页
+              navigate("/");
+            }}
+          >
             <MoneyCollectOutlined />
             取消订单
           </Button>
-          <Button type="primary" style={btnStyle}>
+          <Button 
+            type="primary" 
+            style={btnStyle}
+            onClick={() => {
+              // TODO: 这里应该跳转到支付页面，暂时返回首页
+              navigate("/");
+            }}
+          >
             去支付
           </Button>
         </section>

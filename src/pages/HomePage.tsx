@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Layout, Button } from "antd";
+import { useNavigate } from "react-router-dom";
 const { Header, Footer, Content } = Layout;
 import {
   CustomerServiceOutlined,
@@ -81,7 +82,8 @@ function ContentSection2({
     </div>
   );
 }
-function HomePage({changePage}: {changePage: (page: string) => void}){
+function HomePage(){
+  const navigate = useNavigate();
   const headerStyle: React.CSSProperties = {
     textAlign: "center",
     backgroundColor: "#fff",
@@ -136,30 +138,30 @@ function HomePage({changePage}: {changePage: (page: string) => void}){
     text: string;
     type: "primary" | "default" | "dashed" | "link" | "text";
     ghost: boolean;
-    changePage: (() => void);
+    path: string;
   }
   const btnContentList: BtnContent[] = [
     {
       text: "开始报名",
       type: "primary",
       ghost: false,
-      changePage: () => changePage("Enroll"),
+      path: "/enroll",
     },
     {
       text: "查看报名进度",
       type: "primary",
       ghost: true,
-      changePage: () => changePage("Order"),
+      path: "/order",
     },
     {
       text: "管理员入口",
       type: "default",
       ghost: false,
-      changePage: () => changePage("Manager"),
+      path: "/manager",
     },
   ];
   const btnList = btnContentList.map((item, index) => (
-    <Button key={index} style={btnStyle} type={item.type} ghost={item.ghost} onClick={()=>item.changePage()}>
+    <Button key={index} style={btnStyle} type={item.type} ghost={item.ghost} onClick={()=>navigate(item.path)}>
       {item.text}
     </Button>
   ));
