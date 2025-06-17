@@ -67,7 +67,7 @@ export default function EnrollPage() {
       content:"正在跳转...",
       duration:2.5
     }).then(()=>messageApi.success('bro,你的网络有点差'))
-    navigate("/ClassSelect");
+    navigate("/classselect");
   };
   const underlineStyle: React.CSSProperties = {
     borderBottom: "0.5px solid #ebedf0",
