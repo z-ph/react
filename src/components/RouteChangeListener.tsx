@@ -2,14 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { preloadOnIdle } from '../utils/preload';
 
-// 路由关系映射，用于预测用户可能访问的下一个页面
-const routeRelations: Record<string, string[]> = {
-  '/': ['/enroll','/404','/manager','/order'], 
-  '/enroll': ['/classselect', '/order','404'], 
-  '/classselect': ['/','404'], 
-  '/order': [ '/','404'], 
-  '/manager': ['/','404'] 
-};
+import {routeRelations} from '../routes'
 
 export const RouteChangeListener: React.FC = () => {
   const location = useLocation();

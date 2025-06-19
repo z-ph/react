@@ -1,3 +1,4 @@
+import EnrollSteps from "../components/EnrollSteps"
 import Main from "../components/Main"
 import React from "react"
 import cardcss from "../assets/css/class-select-page.module.css"
@@ -64,10 +65,11 @@ export default function ClassSelectPage() {
             return;
         }
         localStorage.setItem(CLASS_ID, activeClassType.toString());
-        navigate('/classSelect/confirm');
+        navigate('/payment');
     }
     return (
       <Main title="选择班型">
+        <EnrollSteps currrentStep={1} />
         <h2 className="mx-[0.5rem] mb-0 font-medium">请选择班型</h2>
         {classTypeList.map((item) => (
           <ClassTypeCard
@@ -83,7 +85,7 @@ export default function ClassSelectPage() {
             </div>
             <div className="text-gray-600">{item.desc}</div>
             {item.features.map((feature) => (
-              <p>
+              <p key={feature}>
                 <CheckOutlined style={{ color: "#52c41a" }} />{" "}
                 <span className="text-gray-600">{feature}</span>
               </p>
