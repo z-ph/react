@@ -15,6 +15,7 @@ const routesMap: Record<string, string> = {
   "classselect": "ClassSelectPage",
   'payment':'PaymentPage',
   'sign':'SignPage',
+  "group":"GroupResultPage",
   "manager": "ManagerPage",
   "order": "OrderPage",
   "*": "ErrorPage",

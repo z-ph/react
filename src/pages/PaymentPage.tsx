@@ -3,6 +3,7 @@ import Main from "../components/Main"
 import { Button } from "antd"
 import { useNavigate } from "react-router-dom"
 import EnrollSteps from "../components/EnrollSteps"
+import type React from "react";
 export interface OrderInfo {
     title:string;
     content:string;
@@ -67,7 +68,20 @@ export default function PaymentPage() {
       </Main>
     );
 }
-
+export function InfoCard(props: { title: string; infoList: OrderInfo[],children?:React.ReactElement|React.ReactElement[] }) {
+  return (
+    <div className="p-4 ">
+      <h3 className="text-xl font-bold">{props.title}</h3>
+      {props.infoList.map((item, index) => (
+        <div key={index} className="flex justify-between my-[1rem]">
+          <div className="title text-gray-600">{item.title}:</div>
+          <div className="content">{item.content}</div>
+        </div>
+      ))}
+      {props.children}
+    </div>
+  );
+}
 function OrderInfoCard({title,infoList}:{title:string,infoList:OrderInfo[]}){
     return (
       <div className="p-4 ">
