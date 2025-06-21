@@ -18,6 +18,7 @@ const routesMap: Record<string, string> = {
   "group":"GroupResultPage",
   "manager": "ManagerPage",
   "order": "OrderPage",
+  'adminHome':'Admin/AdminHome',
   "*": "ErrorPage",
 };
 

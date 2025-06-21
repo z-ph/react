@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import fs, { fchown } from 'fs';
-const PORT = 4000;
+const PORT = 4321
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -35,14 +35,23 @@ function updateOrderInfo(courseInfo){
 app.post('/api/userInfo',(req,res)=>{
     const data = req.body;
     updateUserInfo(data);
-    res.json({status: 'success', message: 'User info updated successfully'});
+    res.json({status: 'ok', message: 'User info updated successfully'});
 })
 app.post('/api/orderInfo',(req,res)=>{
     const data = req.body;
     updateOrderInfo(data);
-    res.json({status: 'success', message: 'Order info updated successfully'});
+    res.json({status: 'ok', message: 'Order info updated successfully'});
 })
 
+app.post('/admin/login', (req, res) => {
+    const { username, password } = req.body;
+
+    if (username === 'admin' && password === 'admin123') {
+        res.json({ status: 'ok', message: 'Login successful' });
+    } else {
+        res.json({ status: 'error', message: 'Invalid credentials' });
+    }
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

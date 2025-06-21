@@ -16,7 +16,7 @@ const enhancedLazy = <T extends ComponentType<Props>>(
   Component.preload = importFunc;
   return Component;
 };
-const pageComponents = import.meta.glob("../pages/*.tsx");
+const pageComponents = import.meta.glob(["../pages/*.tsx", "../pages/Admin/*.tsx"]);
 function mapToRoutes(map: Record<string, string>): RouteObject[] {
   return Object.entries(map).map(([path, Page]) => {
     const componentPath = `../pages/${Page}.tsx`;

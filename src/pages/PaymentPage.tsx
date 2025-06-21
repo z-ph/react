@@ -43,21 +43,10 @@ export interface tips{
   import { STATUS } from "../main";
 export default function PaymentPage() {
     const navigate = useNavigate()
-    const [classInfoObj] = init()
-    const date = new Date();
-    OrderInfo[1].content = classInfoObj.name;
-    OrderInfo[2].content ='￥'+ (classInfoObj.price/5).toString();
-    OrderInfo[3].content = date.toLocaleDateString() + '至' + new Date(date.getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString();
-    // 设置本地存储的订单信息
-    setLocalData("orderInfo", {
-      orderId: "order_" + Date.now(),
-      classId: classInfoObj.id,
-      className: classInfoObj.name,
-      price: classInfoObj.price, 
-      status: STATUS.定金待支付,
-      statusText: "定金待支付",
-      createdAt: date.toLocaleString(),
-    });
+    const [,,orderInfo] = init()
+    OrderInfo[1].content = orderInfo.className;
+    OrderInfo[2].content ='￥'+ (orderInfo.price/5).toString();
+    OrderInfo[3].content = orderInfo.createdAt + '至' + orderInfo.expireAt;
     const handlePay = () => {
       setLocalData("orderInfo", {
         ...OrderInfo,

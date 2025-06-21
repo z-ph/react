@@ -5,6 +5,9 @@ import cardcss from "../assets/css/class-select-page.module.css"
 import ButtonGroup from "../components/ButtonGroup"
 import { useNavigate } from "react-router-dom"
 import {MoneyCollectTwoTone,CheckOutlined} from "@ant-design/icons"
+import { setLocalData } from "../utils/localApi"
+import { STATUS } from "../main"
+import { init } from "../utils/data"
 
 interface ClassTypeCardProps{
     children:React.ReactNode;
@@ -63,9 +66,21 @@ export default function ClassSelectPage() {
     function handleClassTypeClick(id:number){
         setActiveClassType(id);
     }
-
+    const [classInfoObj] = init()
+    const date = new Date();
     const navigate = useNavigate();
     function handleFinish(){
+          // 设置本地存储的订单信息
+          setLocalData("orderInfo", {
+            orderId: "order_" + Date.now(),
+            classId: classInfoObj.id,
+            className: classInfoObj.name,
+            price: classInfoObj.price, 
+            status: STATUS.定金待支付,
+            statusText: "定金待支付",
+            createdAt: date.toLocaleString(),
+            expireAt: new Date(date.getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleString(),
+          });
         if(activeClassType === null){
             return;
         }

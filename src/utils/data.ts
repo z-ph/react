@@ -22,6 +22,7 @@ export interface orderInfo {
     status: string;
     statusText: string;
     createdAt: string;
+    expireAt: string;
   }
   import { getLocalData } from "./localApi";
 export function init(){
