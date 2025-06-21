@@ -39,7 +39,7 @@ export interface tips{
       "支付问题请联系客服：400-123-4567",
     ],
   };
-  import { setLocalData } from "../utils/localApi";
+  import {  setLocalData } from "../utils/localApi";
   import { STATUS } from "../main";
 export default function PaymentPage() {
     const navigate = useNavigate()
