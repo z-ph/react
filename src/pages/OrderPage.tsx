@@ -1,12 +1,26 @@
 import Main from "../components/Main";
 import type React from 'react';
 import { useNavigate } from "react-router-dom";
-import { Steps, Button } from "antd";
+import { Steps, Button,Modal } from "antd";
 import { MoneyCollectOutlined } from '@ant-design/icons';
-
+import { init } from "../utils/data";
+import { STATUS } from "../main";
+import { removeLocalData } from "../utils/localApi";
 
 export default function OrderPage(){
     const navigate = useNavigate();
+    const [modal, contextHolder] = Modal.useModal();
+    const [classInfo, userInfo,orderInfo] = init();
+    if(!orderInfo){
+        return (
+            <Main title="订单">
+                <div className="text-center mt-20">
+                    <h2 className="text-xl font-bold mb-4">没有找到订单信息</h2>
+                    <Button type="primary" onClick={() => navigate("/")}>返回首页</Button>
+                </div>
+            </Main>
+        );
+    }
     const underlineStyle :React.CSSProperties={
         borderBottom: "1px solid var(--border-color)",
         paddingBottom:'12px'
@@ -19,48 +33,41 @@ export default function OrderPage(){
         ...section1,
         marginTop:"16px"
     }
-    const currentOrder = {
-      orderId: "order_1750064528153",
-      userId: "user_1750055116024",
-      classId: "class_1",
-      userName: "Zhang Penghui",
-      userPhone: "15215215225",
-      userIdCard: "115226333748583991",
-      examType: "other",
-      className: "包退班",
-      price: 5980,
-      status: "pending",
-      statusText: "待支付",
-      createdAt: "2025-06-16 09:02:08",
-    };
+
     const infoList = [
       {
+        //在payment页面中产生
         label: "订单编号",
-        value: currentOrder.orderId,
+        value: orderInfo.orderId,
       },
       {
+        //在payment页面中产生
         label: "创建时间",
-        value: currentOrder.createdAt,
+        value: orderInfo.createdAt,
       },
       {
+        //在classInfo中获取
         label:'班级类型',
-        value: currentOrder.className,
+        value: classInfo.name ,
       },
       {
+        //在userInfo中获取
         label: "学员姓名",
-        value: currentOrder.userName,
+        value: userInfo.username,
       },
       {
+        //在userInfo中获取
         label: "联系电话",
-        value: currentOrder.userPhone,
+        value: userInfo.phone,
       },
       {
+        //在classInfo中获取
         label: "订单金额",
-        value: currentOrder.price,
+        value: classInfo.price.toLocaleString('zh-CN', { style: 'currency', currency: 'CNY' }),
       },
       {
         label: "支付状态",
-        value: currentOrder.statusText,
+        value: orderInfo.statusText,
       },
       ];
       const infoStyle :React.CSSProperties={
@@ -89,8 +96,29 @@ export default function OrderPage(){
         // marginBottom:"20px"
         ...section2
         }
+      const handlePay = () => {
+        navigate("/payment");
+      
+      }
+      const handleSign = () => {
+        navigate("/sign");
+      }
+      const handleCancel =async () => {
+        // removeLocalData("orderInfo");
+        // navigate("/");
+        await modal.confirm({
+          title: '确认取消订单',
+          content: '您确定要取消此订单吗？',
+          onOk: () => {
+            removeLocalData("orderInfo");
+            navigate("/");
+          },
+          onCancel() {},
+        });
+      };
     return (
       <Main title="订单">
+        {contextHolder}
         <section style={section1}>
           <h2 className="font-bold mb-[1rem]">订单状态</h2>
           <Steps
@@ -114,10 +142,8 @@ export default function OrderPage(){
         <section style={section3}>
           <Button 
             style={btnStyle} 
-            onClick={() => {
-              // 取消订单后返回首页
-              navigate("/");
-            }}
+            onClick={()=>handleCancel()}
+            disabled={orderInfo.status === STATUS.报名完成}
           >
             <MoneyCollectOutlined />
             取消订单
@@ -126,16 +152,23 @@ export default function OrderPage(){
             type="primary" 
             style={btnStyle}
             onClick={() => {
-              // TODO: 这里应该跳转到支付页面，暂时返回首页
-              navigate("/404");
+              switch(orderInfo.status) {
+                case STATUS.定金待支付:
+                  handlePay();
+                  break;
+                case STATUS.合同未签署:
+                  handleSign();
+                  break;
+                case STATUS.报名完成:
+                  navigate("/");
             }}
+          }
           >
-            去支付
+            {orderInfo.status === STATUS.定金待支付 ? "去支付定金" : orderInfo.status === STATUS.合同未签署 ? "去签署合同" : "返回首页"}
           </Button>
         </section>
       </Main>
     );
 
 
-
-}
+  }

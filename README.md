@@ -111,3 +111,11 @@ function lazyImport(pageName: Page): ComponentType<PageComponentProps> {
   return lazy(pageComponents[componentPath] as () => Promise<{ default: ComponentType }>);
 }
 ```
+
+# 数据共享问题
+
+数据主要是在不同页面中需要共享，
+单个页面里的组件不存在数据共享问题
+每次切花页面都会触发重新渲染组件
+所以使用localStorage作为中间层，
+在每次新页面渲染时，去请求localStorage中的数据，显示在视图中

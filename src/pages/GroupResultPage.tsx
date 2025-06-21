@@ -12,7 +12,7 @@ const groupInfo = [
   },
   {
     title: "开课时间",
-    content: "2021-09-01",
+    content: "2025-09-01",// 开课时间
   },
   {
     title: "班主任",
@@ -33,8 +33,11 @@ const laterSteps = [
     content: "按班主任通知领取教材和学习资料",
   },
 ];
+import { init } from "../utils/data";
 import { useNavigate } from "react-router-dom";
 export default function GroupResultPage() {
+  const [, userInfo] = init();
+  groupInfo[1].content = userInfo.enrollType +'备考班'
     const navigate = useNavigate();
     return (
       <Main title="分组结果">

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Layout, Button } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, type NavigateFunction } from "react-router-dom";
 const { Header, Footer, Content } = Layout;
 import {
   CustomerServiceOutlined,
@@ -13,8 +13,11 @@ interface HeaderCardProps {
   title: string;
   subTitle: string;
 }
-
-function HeaderCard({ title, subTitle }: HeaderCardProps) {
+const 页脚内容 = [
+  <p key={1}>联系电话：400-123-4567</p>,
+  <p key={2}>地址：北京市海淀区中关村大街 1 号</p>,
+  <p key={3}> © 2025 公职类考试培训中心</p>
+]
   // card
   const headerCardStyle: React.CSSProperties = {
     width: "100%",
@@ -27,36 +30,20 @@ function HeaderCard({ title, subTitle }: HeaderCardProps) {
     color: "#fff",
     marginBottom: "24px",
   };
-  const h1Style: React.CSSProperties = {
-    fontWeight: 700,
-    fontSize: "1.5rem",
-    lineHeight: "2rem",
-  };
-  const pStyle: React.CSSProperties = {
-    opacity: 0.9,
-    fontSize: "1rem",
-    margin: "8px 0 16px 0px",
-  };
+function HeaderCard({ title, subTitle }: HeaderCardProps) {
+
   return (
     <Card variant="borderless" style={headerCardStyle} styles={{ body }}>
-      <h1 style={h1Style}>{title}</h1>
-      <p style={pStyle}>{subTitle}</p>
+      <h1 className="text-[1.5rem]">{title}</h1>
+      <p className="text-gray-200">{subTitle}</p>
     </Card>
   );
 }
 
-/**
- * 内容区域1组件
- * @param children - 子节点内容
- * @returns 带有底部间距的内容区域容器
- */
-function ContentSection1({ children }: { children: ReactNode }) {
-  const sectionStyle: React.CSSProperties = {
-    marginBottom: "12px",
-  };
 
+function ContentSection1({ children }: { children: ReactNode }) {
   return (
-    <div style={sectionStyle} >
+    <div className="mb-[12px]" >
       {children}
     </div>
   );
@@ -69,102 +56,140 @@ function ContentSection2({
   sectionTitle: string;
   children: ReactNode;
 }) {
-  const sectionStyle: React.CSSProperties = {
-    marginBottom: "12px",
-    marginTop: "24px",
-    padding: "16px",
-    paddingInline: 0,
-  };
+
   return (
-    <div style={sectionStyle}>
+    <div  className="mb-[12px] mt-[24px] p-[16px] px-0">
       <h3 className="section-title">{sectionTitle}</h3>
       <div className="grid grid-cols-2 gap-[1rem]">{children}</div>
     </div>
   );
 }
-function HomePage(){
-  const navigate = useNavigate();
-  const headerStyle: React.CSSProperties = {
-    textAlign: "center",
-    backgroundColor: "#fff",
-    paddingInline: "0px",
-    height: "fit-content",
-  };
+const headerStyle: React.CSSProperties = {
+  textAlign: "center",
+  backgroundColor: "#fff",
+  paddingInline: "0px",
+  height: "fit-content",
+};
 
-  const contentStyle: React.CSSProperties = {
-    minHeight: 120,
-    paddingInline: "16px",
-    backgroundColor: "#fff",
-  };
+const contentStyle: React.CSSProperties = {
+  minHeight: 120,
+  paddingInline: "16px",
+  backgroundColor: "#fff",
+};
 
-  const footerStyle: React.CSSProperties = {
-    textAlign: "center",
-    backgroundColor: "#fff",
-    color: "#6b7280",
-    lineHeight: "1.25rem",
-    fontSize: "0.875rem",
-  };
+const footerStyle: React.CSSProperties = {
+  textAlign: "center",
+  backgroundColor: "#fff",
+  color: "#6b7280",
+  lineHeight: "1.25rem",
+  fontSize: "0.875rem",
+};
 
-  const layoutStyle: React.CSSProperties = {
-    position: "absolute",
-    borderRadius: 0,
-    width: "100%",
-    height: "fit-content",
-  };
+const layoutStyle: React.CSSProperties = {
+  position: "absolute",
+  borderRadius: 0,
+  width: "100%",
+  height: "fit-content",
+};
 
-  const cardStyle: React.CSSProperties = {
-    textAlign: "center",
-    backgroundColor: "#F9FAFB",
-    lineHeight: "2rem",
-    height: "fit-content",
-    border: "none",
-  };
-  const cardBody: React.CSSProperties = {
-    padding: "12px",
-  };
-  const iconStyle: React.CSSProperties = {
-    fontSize: "1.5rem",
-    marginBottom: "1rem",
-    color: "#1989FA",
-  };
+const cardStyle: React.CSSProperties = {
+  textAlign: "center",
+  backgroundColor: "#F9FAFB",
+  lineHeight: "2rem",
+  height: "fit-content",
+  border: "none",
+};
+interface BtnContent {
+  text: string;
+  type: "primary" | "default" | "dashed" | "link" | "text";
+  ghost: boolean;
+  path: string;
+}
 
-  const btnStyle: React.CSSProperties = {
-    display: "block",
-    margin: "0.75rem 0",
-    width: "100%",
-    height: "44px",
-  };
-  interface BtnContent {
-    text: string;
-    type: "primary" | "default" | "dashed" | "link" | "text";
-    ghost: boolean;
-    path: string;
-  }
-  const btnContentList: BtnContent[] = [
-    {
-      text: "开始报名",
-      type: "primary",
-      ghost: false,
-      path: "/enroll",
-    },
-    {
-      text: "查看报名进度",
-      type: "primary",
-      ghost: true,
-      path: "/order",
-    },
-    {
-      text: "管理员入口",
-      type: "default",
-      ghost: false,
-      path: "/manager",
-    },
-  ];
-  const btnList = btnContentList.map((item, index) => (
-    <Button key={index} style={btnStyle} type={item.type} ghost={item.ghost} onClick={()=>navigate(item.path)}>
+const cardBody: React.CSSProperties = {
+  padding: "12px",
+};
+const iconStyle: React.CSSProperties = {
+  fontSize: "1.5rem",
+  marginBottom: "1rem",
+  color: "#1989FA",
+};
+
+const btnStyle: React.CSSProperties = {
+  display: "block",
+  margin: "0.75rem 0",
+  width: "100%",
+  height: "44px",
+};
+
+const btnContentList: BtnContent[] = [
+  {
+    text: "开始报名",
+    type: "primary",
+    ghost: false,
+    path: "/enroll",
+  },
+  {
+    text: "查看报名进度",
+    type: "primary",
+    ghost: true,
+    path: "/order",
+  },
+  {
+    text: "管理员入口",
+    type: "default",
+    ghost: false,
+    path: "/manager",
+  },
+];
+const contentSection1Data = [
+  {
+    icon: <UserOutlined style={iconStyle} />,
+    title:'专业师资',
+    content:'资深讲师团队，丰富教学经验'
+  },
+  {
+    icon: <ReadOutlined style={iconStyle} />,
+    title:'精品课程',
+    content:'针对性教学，提高通过率'
+  },
+  {
+    icon: <CustomerServiceOutlined style={iconStyle} />,
+    title:'贴心服务',
+    content:'全程跟踪辅导，答疑解惑'
+  },
+  {
+    icon: <SafetyCertificateOutlined style={iconStyle} />,
+    title:'高分保障',
+    content:'包退班型，无忧备考'
+  },
+]
+const 返回按钮 = (navigate:NavigateFunction) =>{
+  return btnContentList.map((item, index) => (
+    <Button
+      key={index}
+      style={btnStyle}
+      type={item.type}
+      ghost={item.ghost}
+      onClick={() => navigate(item.path)}
+    >
       {item.text}
     </Button>
   ));
+}
+const 返回优势卡片 = () => {
+  return contentSection1Data.map((item) => (
+    <Card key={item.title} style={cardStyle} styles={{ body: cardBody }}>
+      {item.icon}
+      <h3 className="font-medium text-gray-800 ">{item.title}</h3>
+      <p className="text-sm text-gray-600">{item.content}</p>
+    </Card>
+  ));
+}
+function HomePage(){
+  const navigate = useNavigate();
+  const 三个按钮 = 返回按钮(navigate);
+  const 优势 = 返回优势卡片();
   return (
     <>
       <Layout style={layoutStyle}>
@@ -181,38 +206,13 @@ function HomePage(){
               本系统提供公务员、事业单位、教师资格证等考试培训的在线报名服务。
               请点击下方按钮开始报名流程。
             </p>
-            {btnList}
+            {三个按钮}
           </ContentSection1>
           <ContentSection2 sectionTitle="我们的优势">
-            <Card style={cardStyle} styles={{ body: cardBody }}>
-              <UserOutlined style={iconStyle} />
-              <h3 className="font-medium text-gray-800 ">专业师资</h3>
-              <p className="text-sm text-gray-600">
-                资深讲师团队，丰富教学经验
-              </p>
-            </Card>
-            <Card style={cardStyle} styles={{ body: cardBody }}>
-              <ReadOutlined style={iconStyle} />
-              <h3 className="font-medium text-gray-800 ">精品课程</h3>
-              <p className="text-sm text-gray-600">针对性教学，提高通过率</p>
-            </Card>
-            <Card style={cardStyle} styles={{ body: cardBody }}>
-              <CustomerServiceOutlined style={iconStyle} />
-              <h3 className="font-medium text-gray-800 ">贴心服务</h3>
-              <p className="text-sm text-gray-600">全程跟踪辅导，答疑解惑</p>
-            </Card>
-            <Card style={cardStyle} styles={{ body: cardBody }}>
-              <SafetyCertificateOutlined style={iconStyle} />
-              <h3 className="font-medium text-gray-800 ">高分保障</h3>
-              <p className="text-sm text-gray-600">包退班型，无忧备考</p>
-            </Card>
+            {优势}
           </ContentSection2>
         </Content>
-        <Footer style={footerStyle}>
-          <p>联系电话：400-123-4567</p>
-          <p>地址：北京市海淀区中关村大街 1 号</p>
-          <p> © 2025 公职类考试培训中心</p>
-        </Footer>
+        <Footer style={footerStyle}>{页脚内容}</Footer>
       </Layout>
     </>
   );

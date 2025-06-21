@@ -4,7 +4,6 @@ import React from "react"
 import cardcss from "../assets/css/class-select-page.module.css"
 import ButtonGroup from "../components/ButtonGroup"
 import { useNavigate } from "react-router-dom"
-import {Form} from "antd"
 import {MoneyCollectTwoTone,CheckOutlined} from "@ant-design/icons"
 
 interface ClassTypeCardProps{
@@ -30,8 +29,31 @@ export function ClassTypeCard({children,active,id,onClick: notify}: ClassTypeCar
       </>
     );
 }
+const classTypeList = [
+  {
+    id: 1,
+    name: "包退班",
+    desc: "承诺未通过考试全额退款",
+    remainAmount: 10,
+    price: 1000,
+    features: ["专业教材", "1对1辅导"],
+  },
+  {
+    id: 2,
+    name: "非包退班",
+    desc: "性价比之选，无退款承诺",
+    remainAmount: 10,
+    price: 1000,
+    features: ["专业教材", "1对1辅导"],
+  },
+];
+classTypeList.forEach((item) => {
+  item.toString = function () {
+    return JSON.stringify(item);
+  };
+});
+const CLASS_ID = 'classId';
 export default function ClassSelectPage() {
-    const CLASS_ID = 'classId';
     let classId:string|number|null = localStorage.getItem(CLASS_ID);
     if(classId !==null){
         classId = parseInt(classId);
@@ -41,30 +63,14 @@ export default function ClassSelectPage() {
     function handleClassTypeClick(id:number){
         setActiveClassType(id);
     }
-    const classTypeList = [
-      {
-        id: 1,
-        name: "包退班",
-        desc: "承诺未通过考试全额退款",
-        remainAmount: 10,
-        price: 1000,
-        features: ["专业教材", "1对1辅导"],
-      },
-      {
-        id: 2,
-        name: "非包退班",
-        desc: "性价比之选，无退款承诺",
-        remainAmount: 10,
-        price: 1000,
-        features: ["专业教材", "1对1辅导"],
-      },
-    ];
+
     const navigate = useNavigate();
     function handleFinish(){
         if(activeClassType === null){
             return;
         }
         localStorage.setItem(CLASS_ID, activeClassType.toString());
+        localStorage.setItem('classInfo', classTypeList.find(item => item.id === activeClassType)?.toString() || '');
         navigate('/payment');
     }
     return (
@@ -84,34 +90,26 @@ export default function ClassSelectPage() {
               {item.price}
             </div>
             <div className="text-gray-600">{item.desc}</div>
+            <div className="bg-[#07C160] inline-block text-[#fff] text-[0.5rem] rounded-[1rem] px-[0.25rem] absolute top-[1rem] right-[1rem]">
+              剩余名额:{item.remainAmount}
+            </div>
             {item.features.map((feature) => (
               <p key={feature}>
                 <CheckOutlined style={{ color: "#52c41a" }} />{" "}
                 <span className="text-gray-600">{feature}</span>
               </p>
             ))}
-            <div
-              className="bg-[#07C160] inline-block text-[#fff] text-[0.5rem] "
-              style={{
-                borderRadius: "1rem",
-                paddingInline: " 0.25rem",
-                position: "absolute",
-                right: "1rem",
-                top: "1rem",
-              }}
-            >
-              剩余名额:{item.remainAmount}
-            </div>
           </ClassTypeCard>
         ))}
-        <Form onFinish={handleFinish} style={{paddingInline:'32px',paddingBottom:'16px'}}>
+        <div className="px-[32px] pb-[16px]">
           <ButtonGroup
             leftText="上一步"
             rightText="确定"
-            leftCallback={() => navigate(-1)}
+            leftCallback={() => navigate('/enroll')}
+            rightCallback={handleFinish}
             rightDisabled={activeClassType === null}
           />
-        </Form>
+        </div>
       </Main>
     );
 }
