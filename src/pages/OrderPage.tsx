@@ -67,7 +67,7 @@ export default function OrderPage(){
       },
       {
         label: "支付状态",
-        value: orderInfo.statusText,
+        value: orderInfo.statusText=== STATUS.定金待支付 ? "定金待支付" :'定金已支付',
       },
       ];
       const infoStyle :React.CSSProperties={
@@ -116,6 +116,12 @@ export default function OrderPage(){
           onCancel() {},
         });
       };
+      const stepMap = {
+        [STATUS.订单创建]: 0,
+        [STATUS.定金待支付]: 1,
+        [STATUS.合同未签署]: 2,
+        [STATUS.报名完成]: 3,
+      };
     return (
       <Main title="订单">
         {contextHolder}
@@ -126,12 +132,12 @@ export default function OrderPage(){
             style={{ height: "152px", padding: "8px 16px" }}
             direction="vertical"
             size="small"
-            current={1}
+            current={stepMap[orderInfo.status]}
             items={[
               { description: <div style={underlineStyle}>订单已创建</div> },
-              { description: <div style={underlineStyle}>订单处理中</div> },
-              { description: <div style={underlineStyle}>订单已发货</div> },
-              { description: <div>订单已完成</div> },
+              { description: <div style={underlineStyle}>定金待支付</div> },
+              { description: <div style={underlineStyle}>合同待签署</div> },
+              { description: <div>报名已完成</div> },
             ]}
           />
         </section>

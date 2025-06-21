@@ -18,7 +18,7 @@ const infoList = [
     content: "￥1000.00",
   },
 ];
-import { init } from '../utils/data';
+import { init, type orderInfo } from '../utils/data';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { setLocalData,getLocalData } from '../utils/localApi';
@@ -153,6 +153,13 @@ export default function SignPage() {
                 status: STATUS.报名完成,
                 statusText: "报名完成",
             })
+            //加入历史订单列表
+            const historyOrders = getLocalData("historyOrders") as Array<orderInfo> || [];
+            historyOrders.push({
+              ...((getLocalData("orderInfo") as object) || {}),
+              status: STATUS.报名完成,
+              statusText: "报名完成",
+            } as orderInfo);
             navigate('/group');
           }
           }
