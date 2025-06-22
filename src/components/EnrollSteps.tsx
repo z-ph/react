@@ -1,17 +1,26 @@
 import { Steps } from "antd";
 
-export default function EnrollSteps({currrentStep}:{currrentStep:number}) {
+export default function EnrollSteps({
+  currrentStep,
+}: {
+  currrentStep: number;
+}) {
   return (
     <Steps
       type="inline"
-      style={{ margin: "16px 0", width: "100%", display: "flex",flexDirection:"row"}}
+      style={{
+        margin: "16px 0",
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+      }}
       progressDot
       direction="horizontal"
       labelPlacement="horizontal"
       current={currrentStep}
     >
       <Steps.Step
-        style={{ flex: "1 0 0",display:"flex",flexDirection:"row" }}
+        style={{ flex: "1 0 0", display: "flex", flexDirection: "row" }}
         title={<span className="text-[12px]">填写信息</span>}
       />
       <Steps.Step

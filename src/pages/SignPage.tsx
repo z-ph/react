@@ -1,5 +1,5 @@
-import Main from '../components/Main';
-import {InfoCard} from './PaymentPage';
+import Main from "../components/Main";
+import InfoCard from "../components/InfoCard";
 const infoList = [
   {
     title: "合同编号",
@@ -18,11 +18,11 @@ const infoList = [
     content: "￥1000.00",
   },
 ];
-import { init, type orderInfo } from '../utils/data';
-import { Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { setLocalData,getLocalData } from '../utils/localApi';
-import { STATUS } from '../main';
+import { init, type orderInfo } from "../utils/data";
+import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
+import { setLocalData, getLocalData } from "../utils/localApi";
+import { STATUS } from "../main";
 export default function SignPage() {
   //每次重新渲染时都重新获取用户信息和班级信息
   const [classInfo, userInfo] = init();
@@ -101,72 +101,73 @@ export default function SignPage() {
     </div>
   ));
 
-    return (
-      <Main title="签署合同">
-        <InfoCard title="合同信息" infoList={infoList}></InfoCard>
-        <InfoCard title="合同预览" infoList={[]}>
-          <div data-v-c686172e="" className="bg-[#F9FAFB] p-[8px]" style={{borderRadius:"8px"}}>
-            <h3
-              data-v-c686172e=""
-              className="text-center font-bold text-lg mb-4"
-            >
-              培训服务协议
-            </h3>
-            <p data-v-c686172e="" className="mb-2">
-              甲方：{userInfo.username}（学员）
-            </p>
-            <p data-v-c686172e="" className="mb-4">
-              乙方：公职类考试培训中心（培训机构）
-            </p>
-            {contractContentList}
-            <div data-v-c686172e="" className="flex justify-between mt-8">
-              <div data-v-c686172e="">
-                <p data-v-c686172e="" className="mb-2">
-                  甲方签字：
-                </p>
-                <p data-v-c686172e="">日期：{new Date().toLocaleDateString()}</p>
-              </div>
-              <div data-v-c686172e="">
-                <p data-v-c686172e="" className="mb-2">
-                  乙方签字：公职类考试培训中心
-                </p>
-                <p data-v-c686172e="">日期：{new Date().toLocaleDateString()}</p>
-              </div>
+  return (
+    <Main title="签署合同">
+      <InfoCard title="合同信息" infoList={infoList}></InfoCard>
+      <InfoCard title="合同预览" infoList={[]}>
+        <div
+          data-v-c686172e=""
+          className="bg-[#F9FAFB] p-[8px]"
+          style={{ borderRadius: "8px" }}
+        >
+          <h3 data-v-c686172e="" className="text-center font-bold text-lg mb-4">
+            培训服务协议
+          </h3>
+          <p data-v-c686172e="" className="mb-2">
+            甲方：{userInfo.username}（学员）
+          </p>
+          <p data-v-c686172e="" className="mb-4">
+            乙方：公职类考试培训中心（培训机构）
+          </p>
+          {contractContentList}
+          <div data-v-c686172e="" className="flex justify-between mt-8">
+            <div data-v-c686172e="">
+              <p data-v-c686172e="" className="mb-2">
+                甲方签字：
+              </p>
+              <p data-v-c686172e="">日期：{new Date().toLocaleDateString()}</p>
+            </div>
+            <div data-v-c686172e="">
+              <p data-v-c686172e="" className="mb-2">
+                乙方签字：公职类考试培训中心
+              </p>
+              <p data-v-c686172e="">日期：{new Date().toLocaleDateString()}</p>
             </div>
           </div>
-        </InfoCard>
-        <div className="flex gap-[1rem] justify-center items-center p-[32px]">
-          <Button
-            className="flex-1/2"
-            style={{ height: "44px" }}
-            onClick={() => navigate('/order')}
-          >
-            暂不签署
-          </Button>
-          <Button
-            className="flex-1/2"
-            style={{ height: "44px" }}
-            type="primary"
-            onClick={() => {
-              setLocalData("orderInfo", {
-                ...((getLocalData("orderInfo") as object) || {}),
-                status: STATUS.报名完成,
-                statusText: "报名完成",
-            })
+        </div>
+      </InfoCard>
+      <div className="flex gap-[1rem] justify-center items-center p-[32px]">
+        <Button
+          className="flex-1/2"
+          style={{ height: "44px" }}
+          onClick={() => navigate("/order")}
+        >
+          暂不签署
+        </Button>
+        <Button
+          className="flex-1/2"
+          style={{ height: "44px" }}
+          type="primary"
+          onClick={() => {
+            setLocalData("orderInfo", {
+              ...((getLocalData("orderInfo") as object) || {}),
+              status: STATUS.报名完成,
+              statusText: "报名完成",
+            });
             //加入历史订单列表
-            const historyOrders = getLocalData("historyOrders") as Array<orderInfo> || [];
+            const historyOrders =
+              (getLocalData("historyOrders") as Array<orderInfo>) || [];
             historyOrders.push({
               ...((getLocalData("orderInfo") as object) || {}),
               status: STATUS.报名完成,
               statusText: "报名完成",
             } as orderInfo);
-            navigate('/group');
-          }
-          }
-          >
-            确认签署
-          </Button>
-        </div>
-      </Main>
-    );
+            navigate("/group");
+          }}
+        >
+          确认签署
+        </Button>
+      </div>
+    </Main>
+  );
 }

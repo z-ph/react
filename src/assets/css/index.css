@@ -139,16 +139,3 @@ button:focus-visible {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
-h3{
-  font-size: 1.17rem;
-  margin-block-start: 1rem;
-  margin-block-end: 1rem;
-}
-p{
-  font-size: 14px;
-  margin-block-start: 1rem;
-  margin-block-end: 1rem;
-}
-h1{
-  margin:1rem 0;
-}

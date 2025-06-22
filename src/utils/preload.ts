@@ -1,9 +1,10 @@
-import { lazy, } from 'react';
-import type { ComponentType, LazyExoticComponent } from 'react';
+import { lazy } from "react";
+import type { ComponentType, LazyExoticComponent } from "react";
 
 // 定义预加载方法
 // 定义带有预加载功能的组件类型
-interface PreloadableComponent<T extends ComponentType<void>> extends LazyExoticComponent<T> {
+interface PreloadableComponent<T extends ComponentType<void>>
+  extends LazyExoticComponent<T> {
   preload?: () => Promise<{ default: T }>;
 }
 
@@ -16,20 +17,32 @@ const preloadMap = new Map<string, ModuleImport<ComponentType<void>>>();
 // 获取路由组件的映射
 const getRouteComponentMap = () => {
   // 动态导入路由组件
-  const HomePage = lazy(() => import('../pages/HomePage')) as PreloadableComponent<ComponentType<void>>;
-  const EnrollPage = lazy(() => import('../pages/EnrollPage')) as PreloadableComponent<ComponentType<void>>;
-  const ClassSelectPage = lazy(() => import('../pages/ClassSelectPage')) as PreloadableComponent<ComponentType<void>>;
-  const ManagerPage = lazy(() => import('../pages/ManagerPage')) as PreloadableComponent<ComponentType<void>>;
-  const OrderPage = lazy(() => import('../pages/OrderPage')) as PreloadableComponent<ComponentType<void>>;
-  const ErrorPage = lazy(() => import('../pages/ErrorPage')) as PreloadableComponent<ComponentType<void>>;
+  const HomePage = lazy(
+    () => import("../pages/HomePage"),
+  ) as PreloadableComponent<ComponentType<void>>;
+  const EnrollPage = lazy(
+    () => import("../pages/EnrollPage"),
+  ) as PreloadableComponent<ComponentType<void>>;
+  const ClassSelectPage = lazy(
+    () => import("../pages/ClassSelectPage"),
+  ) as PreloadableComponent<ComponentType<void>>;
+  const ManagerPage = lazy(
+    () => import("../pages/ManagerPage"),
+  ) as PreloadableComponent<ComponentType<void>>;
+  const OrderPage = lazy(
+    () => import("../pages/OrderPage"),
+  ) as PreloadableComponent<ComponentType<void>>;
+  const ErrorPage = lazy(
+    () => import("../pages/ErrorPage"),
+  ) as PreloadableComponent<ComponentType<void>>;
 
   return {
-    '/': HomePage,
-    '/enroll': EnrollPage,
-    '/classselect': ClassSelectPage,
-    '/manager': ManagerPage,
-    '/order': OrderPage,
-    '*': ErrorPage
+    "/": HomePage,
+    "/enroll": EnrollPage,
+    "/classselect": ClassSelectPage,
+    "/manager": ManagerPage,
+    "/order": OrderPage,
+    "*": ErrorPage,
   };
 };
 
@@ -37,25 +50,29 @@ const getRouteComponentMap = () => {
 type RouteComponentMap = {
   [key: string]: PreloadableComponent<ComponentType<void>>;
 } & {
-  '*': PreloadableComponent<ComponentType<void>>;
+  "*": PreloadableComponent<ComponentType<void>>;
 };
 
 // 路由组件映射
 const routeComponentMap: RouteComponentMap = getRouteComponentMap();
 
 // 预加载指定路径的组件
-export const preloadComponent = (path: string): ModuleImport<ComponentType<void>> | undefined => {
+export const preloadComponent = (
+  path: string,
+): ModuleImport<ComponentType<void>> | undefined => {
   // 如果已经预加载过，直接返回缓存的 Promise
   if (preloadMap.has(path)) {
     return preloadMap.get(path);
   }
 
   // 获取对应路径的组件
-  const component = routeComponentMap[path as keyof RouteComponentMap] || routeComponentMap['*'];
-  
+  const component =
+    routeComponentMap[path as keyof RouteComponentMap] ||
+    routeComponentMap["*"];
+
   // 获取组件的预加载方法
   const preloadMethod = component.preload;
-  
+
   // 如果组件有预加载方法，则使用它
   let componentPromise: ModuleImport<ComponentType<void>>;
   if (preloadMethod) {
@@ -63,42 +80,42 @@ export const preloadComponent = (path: string): ModuleImport<ComponentType<void>
   } else {
     // 否则，根据路径直接导入组件
     switch (path) {
-      case '/':
-        componentPromise = import('../pages/HomePage');
+      case "/":
+        componentPromise = import("../pages/HomePage");
         break;
-      case '/enroll':
-        componentPromise = import('../pages/EnrollPage');
+      case "/enroll":
+        componentPromise = import("../pages/EnrollPage");
         break;
-      case '/classselect':
-        componentPromise = import('../pages/ClassSelectPage');
+      case "/classselect":
+        componentPromise = import("../pages/ClassSelectPage");
         break;
-      case '/manager':
-        componentPromise = import('../pages/ManagerPage');
+      case "/manager":
+        componentPromise = import("../pages/ManagerPage");
         break;
-      case '/order':
-        componentPromise = import('../pages/OrderPage');
+      case "/order":
+        componentPromise = import("../pages/OrderPage");
         break;
       default:
-        componentPromise = import('../pages/ErrorPage');
+        componentPromise = import("../pages/ErrorPage");
     }
   }
 
   // 缓存预加载的 Promise，并添加错误处理
-  preloadMap.set(path, componentPromise.catch(err => {
-    // 预加载失败时移除缓存，以便后续访问时重新加载
-    preloadMap.delete(path);
-    throw err;
-  }));
+  preloadMap.set(
+    path,
+    componentPromise.catch((err) => {
+      // 预加载失败时移除缓存，以便后续访问时重新加载
+      preloadMap.delete(path);
+      throw err;
+    }),
+  );
   return componentPromise;
 };
 
 // 在浏览器空闲时预加载组件
 export const preloadOnIdle = (path: string): void => {
-  if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(
-      () => preloadComponent(path),
-      { timeout: 1000 }
-    );
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(() => preloadComponent(path), { timeout: 1000 });
   } else {
     // 降级处理：使用 setTimeout
     setTimeout(() => preloadComponent(path), 1000);

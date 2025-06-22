@@ -5,7 +5,7 @@ interface MainProps {
   title: string;
   isAdmin?: boolean;
 }
-export default function Main({children,title,isAdmin=false}: MainProps) {
+export default function Main({ children, title, isAdmin = false }: MainProps) {
   const mainStyle: React.CSSProperties = {
     width: "100%",
     maxWidth: "750px",
@@ -17,7 +17,7 @@ export default function Main({children,title,isAdmin=false}: MainProps) {
 
   return (
     <main style={mainStyle}>
-      <Nav title={title} rightHidden={!isAdmin}  />
+      <Nav title={title} rightHidden={!isAdmin} />
       {children}
     </main>
   );

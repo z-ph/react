@@ -8,7 +8,14 @@ interface ButtonGroupProps {
   leftDisabled?: boolean;
 }
 export default function ButtonGroup(props: ButtonGroupProps) {
-  const { leftCallback, rightCallback, rightDisabled = false, leftText, rightText, leftDisabled = false } = props;
+  const {
+    leftCallback,
+    rightCallback,
+    rightDisabled = false,
+    leftText,
+    rightText,
+    leftDisabled = false,
+  } = props;
   return (
     <div className="flex gap-4 ">
       <Button

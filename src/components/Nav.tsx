@@ -4,21 +4,20 @@ import { useNavigate } from "react-router-dom";
 interface NavProps {
   rightHidden?: boolean;
   title: string;
-  }
+}
 function Nav(props: NavProps) {
   const navigate = useNavigate();
-  const { title,rightHidden=true } = props;
+  const { title, rightHidden = true } = props;
   const style: React.CSSProperties = {
     borderBottom: "0.5px solid #ebedf0",
-    alignItems: 'center',
+    alignItems: "center",
     userSelect: "none",
-  }; 
+  };
 
   return (
     <nav style={style} className="relative flex text-[#000] w-[100%] h-[46px] ">
       <div
         onClick={() => navigate(-1)}
-
         className="absolute left-[1rem] text-[#1989fa] cursor-pointer"
       >
         <LeftOutlined />
@@ -28,7 +27,7 @@ function Nav(props: NavProps) {
         style={{
           display: rightHidden ? "none" : "block",
         }}
-        onClick={() => navigate('/')}
+        onClick={() => navigate("/")}
         className="absolute right-[1rem] text-[#1989fa] cursor-pointer"
       >
         退出

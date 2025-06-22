@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { Link,  } from 'react-router-dom';
-import { preloadOnHover, preloadOnIdle } from '../utils/preload';
-import type {LinkProps} from 'react-router-dom';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { preloadOnHover, preloadOnIdle } from "../utils/preload";
+import type { LinkProps } from "react-router-dom";
 interface PreloadLinkProps extends LinkProps {
   preloadOnHover?: boolean; // 是否在悬停时预加载
-  preloadOnIdle?: boolean;  // 是否在空闲时预加载
+  preloadOnIdle?: boolean; // 是否在空闲时预加载
 }
 
 export const PreloadLink: React.FC<PreloadLinkProps> = ({
@@ -15,7 +15,7 @@ export const PreloadLink: React.FC<PreloadLinkProps> = ({
   ...props
 }) => {
   // 确保 to 是字符串类型
-  const path = typeof to === 'string' ? to : to.pathname || '/';
+  const path = typeof to === "string" ? to : to.pathname || "/";
 
   // 处理鼠标进入事件
   const handleMouseEnter = () => {
@@ -32,11 +32,7 @@ export const PreloadLink: React.FC<PreloadLinkProps> = ({
   }, [enablePreloadOnIdle, path]);
 
   return (
-    <Link
-      to={to}
-      onMouseEnter={handleMouseEnter}
-      {...props}
-    >
+    <Link to={to} onMouseEnter={handleMouseEnter} {...props}>
       {children}
     </Link>
   );

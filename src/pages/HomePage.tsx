@@ -16,22 +16,21 @@ interface HeaderCardProps {
 const 页脚内容 = [
   <p key={1}>联系电话：400-123-4567</p>,
   <p key={2}>地址：北京市海淀区中关村大街 1 号</p>,
-  <p key={3}> © 2025 公职类考试培训中心</p>
-]
-  // card
-  const headerCardStyle: React.CSSProperties = {
-    width: "100%",
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-  };
-  const body: React.CSSProperties = {
-    backgroundColor: "#1989FA",
-    padding: "32px 16px",
-    color: "#fff",
-    marginBottom: "24px",
-  };
+  <p key={3}> © 2025 公职类考试培训中心</p>,
+];
+// card
+const headerCardStyle: React.CSSProperties = {
+  width: "100%",
+  borderTopLeftRadius: 0,
+  borderTopRightRadius: 0,
+};
+const body: React.CSSProperties = {
+  backgroundColor: "#1989FA",
+  padding: "32px 16px",
+  color: "#fff",
+  marginBottom: "24px",
+};
 function HeaderCard({ title, subTitle }: HeaderCardProps) {
-
   return (
     <Card variant="borderless" style={headerCardStyle} styles={{ body }}>
       <h1 className="text-[1.5rem]">{title}</h1>
@@ -40,13 +39,8 @@ function HeaderCard({ title, subTitle }: HeaderCardProps) {
   );
 }
 
-
 function ContentSection1({ children }: { children: ReactNode }) {
-  return (
-    <div className="mb-[12px]" >
-      {children}
-    </div>
-  );
+  return <div className="mb-[12px]">{children}</div>;
 }
 
 function ContentSection2({
@@ -56,9 +50,8 @@ function ContentSection2({
   sectionTitle: string;
   children: ReactNode;
 }) {
-
   return (
-    <div  className="mb-[12px] mt-[24px] p-[16px] px-0">
+    <div className="mb-[12px] mt-[24px] p-[16px] px-0">
       <h3 className="section-title">{sectionTitle}</h3>
       <div className="grid grid-cols-2 gap-[1rem]">{children}</div>
     </div>
@@ -145,26 +138,26 @@ const btnContentList: BtnContent[] = [
 const contentSection1Data = [
   {
     icon: <UserOutlined style={iconStyle} />,
-    title:'专业师资',
-    content:'资深讲师团队，丰富教学经验'
+    title: "专业师资",
+    content: "资深讲师团队，丰富教学经验",
   },
   {
     icon: <ReadOutlined style={iconStyle} />,
-    title:'精品课程',
-    content:'针对性教学，提高通过率'
+    title: "精品课程",
+    content: "针对性教学，提高通过率",
   },
   {
     icon: <CustomerServiceOutlined style={iconStyle} />,
-    title:'贴心服务',
-    content:'全程跟踪辅导，答疑解惑'
+    title: "贴心服务",
+    content: "全程跟踪辅导，答疑解惑",
   },
   {
     icon: <SafetyCertificateOutlined style={iconStyle} />,
-    title:'高分保障',
-    content:'包退班型，无忧备考'
+    title: "高分保障",
+    content: "包退班型，无忧备考",
   },
-]
-const 返回按钮 = (navigate:NavigateFunction) =>{
+];
+const 返回按钮 = (navigate: NavigateFunction) => {
   return btnContentList.map((item, index) => (
     <Button
       key={index}
@@ -176,7 +169,7 @@ const 返回按钮 = (navigate:NavigateFunction) =>{
       {item.text}
     </Button>
   ));
-}
+};
 const 返回优势卡片 = () => {
   return contentSection1Data.map((item) => (
     <Card key={item.title} style={cardStyle} styles={{ body: cardBody }}>
@@ -185,8 +178,8 @@ const 返回优势卡片 = () => {
       <p className="text-sm text-gray-600">{item.content}</p>
     </Card>
   ));
-}
-function HomePage(){
+};
+function HomePage() {
   const navigate = useNavigate();
   const 三个按钮 = 返回按钮(navigate);
   const 优势 = 返回优势卡片();
@@ -208,9 +201,7 @@ function HomePage(){
             </p>
             {三个按钮}
           </ContentSection1>
-          <ContentSection2 sectionTitle="我们的优势">
-            {优势}
-          </ContentSection2>
+          <ContentSection2 sectionTitle="我们的优势">{优势}</ContentSection2>
         </Content>
         <Footer style={footerStyle}>{页脚内容}</Footer>
       </Layout>
