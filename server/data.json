@@ -1,0 +1,30 @@
+{
+  "orderInfo": {
+    "0": {
+      "title": "订单编号",
+      "content": ""
+    },
+    "1": {
+      "title": "班型名称",
+      "content": "非包退班"
+    },
+    "2": {
+      "title": "定金金额",
+      "content": "￥200"
+    },
+    "3": {
+      "title": "有效期",
+      "content": "2025/6/22 20:19:57至2025/6/29 20:19:57"
+    },
+    "status": "报名完成",
+    "statusText": "报名完成"
+  },
+  "userInfo": {
+    "username": "张爱好者你",
+    "phone": "13333333333",
+    "IDcard": "123432143214321426",
+    "education": "大专",
+    "enrollType": "教师资格证",
+    "remark": "2222"
+  }
+}

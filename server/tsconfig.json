@@ -1,0 +1,47 @@
+{
+    // 声明需要编译的文件路径
+    // **表示任何文件夹
+    // *表示任何文件
+    "include": [
+        "./src/*.ts"
+    ], //表示编译src文件下所有子目录的所有文件
+    // "exclude": [""],//表示跳过哪些路径下的编译
+    //编译器选项
+    "compilerOptions": {
+        //指定编译结果的版本
+        "target": "esnext",
+        //指定编译结果的模块化规范版本
+        //如果打包node代码，node 环境下独有的api需要指定为node16及以上
+        "module": "node16",
+        //指定项目中要使用的库，一般不需要设置，使用默认值即可
+        "lib": [
+            "DOM",
+            "ES6"
+        ],
+        // 指定编译结果的输出路径,不设置则编译结果与源文件同级
+        "outDir": "./dist",
+        // 将所有代码所有全局作用域代码合并为一个文件,如果源代码中有使用模块化，则要求编译结果设置为amd或system模块化标准
+        // "outFile": "./dist/app.js",
+        // //是否编译js,默认为false,一般配合checkJS同真假
+        // "allowJs": false,
+        // //是否检查js类型安全，默认为false
+        // "checkJs": false
+        // 移除注释,默认为false
+        // "removeComments": false,
+        // //不产生编译后的文件,默认为false,可用于检查是否有ts报错
+        // "noEmit": false,
+        // //有错误时，报错，并且不产生编译结果,默认为false
+        // "noEmitOnError": true
+        //接下来是有关ts类型检查的配置
+        //所有严格设置的总开关,默认为false
+        "strict": true
+        // //用于设置编译后的文件是否使用严格模式，默认不是严格模式，当存在模块导入导出时，自动进入严格模式
+        // "alwaysStrict": true,
+        // //true时，隐式any报错，默认为false
+        // "noImplicitAny": true,
+        // //true时,隐式this为any类型报错，默认为false
+        // "noImplicitThis": true,
+        // //true时，严格检查空值,可能出现空值的地方报错，默认false
+        // "strictNullChecks": true
+    }
+}
