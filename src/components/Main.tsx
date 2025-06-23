@@ -4,8 +4,9 @@ interface MainProps {
   children?: React.ReactNode | string;
   title: string;
   isAdmin?: boolean;
+  backPath?:string;
 }
-export default function Main({ children, title, isAdmin = false }: MainProps) {
+export default function Main({ children, title, isAdmin = false, backPath }: MainProps) {
   const mainStyle: React.CSSProperties = {
     width: "100%",
     maxWidth: "750px",
@@ -17,7 +18,7 @@ export default function Main({ children, title, isAdmin = false }: MainProps) {
 
   return (
     <main style={mainStyle}>
-      <Nav title={title} rightHidden={!isAdmin} />
+      <Nav title={title} rightHidden={!isAdmin} backPath={backPath} />
       {children}
     </main>
   );

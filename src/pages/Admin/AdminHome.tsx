@@ -4,16 +4,18 @@ import Main from "../../components/Main";
 import {
   ApartmentOutlined,
   FileTextOutlined,
-  GroupOutlined,
   HomeOutlined,
   MonitorOutlined,
   RightOutlined,
   UsergroupAddOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { List, Button } from "antd";
 import { createPortal } from "react-dom";
 export default function AdminHome() {
   const NavBar = BottomNav();
+  const navigate = useNavigate();
+  
   return (
     <Main title="后台管理" isAdmin={true}>
       {createPortal(NavBar, document.body as HTMLElement)}
@@ -22,18 +24,27 @@ export default function AdminHome() {
         <OverAllData></OverAllData>
         <InfoCard title="快捷操作">
           <div className="grid grid-cols-2 gap-[1rem]">
-            <Button type="primary" style={{ height: "44px" }} ghost>
-              查看数据
+            <Button type="primary" style={{ height: "44px" }} ghost
+            onClick={()=>navigate('/enrollData')}
+            >
+              查看报名数据
             </Button>
-            <Button type="primary" style={{ height: "44px" }} ghost>
-              查看数据
+            <Button type="primary" style={{ height: "44px" }} ghost
+            onClick={()=>navigate('/groupConfig')}
+            >
+              管理群组
             </Button>
-            <Button type="primary" style={{ height: "44px" }} ghost>
-              查看数据
+            <Button type="primary" style={{ height: "44px" }} ghost
+            onClick={()=>navigate('/orderManage')}
+            >
+              查看订单
             </Button>
-            <Button type="primary" style={{ height: "44px" }} ghost>
-              查看数据
+            <Button type="primary" style={{ height: "44px" }} ghost
+            onClick={()=>navigate('/logMonitor')}
+            >
+              查看日志
             </Button>
+  
           </div>
         </InfoCard>
         <InfoCard title="">
@@ -53,8 +64,8 @@ function WelcomeCard() {
       <p className="text-gray-600 text-[14px]">
         今天是{new Date().toLocaleDateString()}
       </p>
-      <GroupOutlined
-        className="text-3xl right-0 top-0 bottom-0  absolute"
+      <UserOutlined
+        className="text-6xl right-[1rem] top-0 bottom-0 absolute"
         style={{ color: "#1890ff" }}
       />
     </div>

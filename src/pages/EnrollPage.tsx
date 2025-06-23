@@ -77,7 +77,7 @@ export default function EnrollPage() {
   // 如果有草稿数据，设置表单值
   useEffect(() => form.setFieldsValue(info));
   return (
-    <Main title={"填写信息"}>
+    <Main title={"填写信息"} backPath="/">
       {contextHolder}
       <Steps
         type="inline"

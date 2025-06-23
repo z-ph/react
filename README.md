@@ -11,7 +11,7 @@
 
 ## 3. 安装tailwindcss
 - 第一步
-  > pnpm install tailwindcss @tailwindcss/vite postcss@latest autoprefixer@latest
+  > pnpm install tailwindcss @tailwindcss/vite 
 - 第二步
   在vite.config.js中配置
  ![配置](image.png)

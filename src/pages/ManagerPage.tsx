@@ -52,7 +52,7 @@ export default function ManagerPage() {
       </header>
 
       <Form
-        onFinish={onFinish}
+        onFinish={()=>{navigate("/adminHome");}}
         name="wrap"
         labelCol={{ flex: "110px" }}
         labelAlign="left"
